@@ -1,0 +1,36 @@
+html {
+    background-color: linen;
+}
+
+body {
+    width: 600px;
+    margin: 0 auto;
+}
+
+#game-area {
+    width: 600px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+#game-area .alive {
+    background-color: black;
+}
+
+#game-area .dead {
+    background-color: white;
+}
+
+#buttons {
+}
+
+#buttons > button {
+    display: inline;
+    margin: 0 auto;
+    width: 32%;
+}
+
+#game-input {
+    width: 600px;
+    height: 400px;
+}

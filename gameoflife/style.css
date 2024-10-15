@@ -27,10 +27,34 @@ body {
 #buttons > button {
     display: inline;
     margin: 0 auto;
-    width: 32%;
+    width: 20%;
+}
+
+#delay-slider {
+}
+
+#delay-text {
+    width: 50px;
+}
+
+#slider-container > input {
+    display: inline-block;
 }
 
 #game-input {
     width: 600px;
     height: 400px;
+}
+
+#help-dialog {
+    margin: 100px auto;
+    position: absolute;
+    z-index: 1000;
+    width: 1000px;
+    height: 500px;
+}
+
+::backdrop {
+    background-color: black;
+    opacity: 0.75;
 }

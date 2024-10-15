@@ -97,9 +97,15 @@ const text_input = document.getElementById("game-input");
 const button_load = document.getElementById("load");
 const button_play = document.getElementById("play");
 const button_pause = document.getElementById("pause");
+const button_help = document.getElementById("help");
 const game_area = document.getElementById("game-area");
+const delay_slider = document.getElementById("delay-slider");
+const delay_text = document.getElementById("delay-text");
+const help_dialog = document.getElementById("help-dialog");
+const close_dialog = document.getElementById("close-dialog");
 let gb;
 let run = false;
+let delay = delay_slider.value;
 
 function draw(board) {
     let [n_r, n_c] = gb.get_size();
@@ -145,6 +151,24 @@ button_play.addEventListener("click", function () {
     main();
 });
 
+delay_slider.oninput = function () {
+    delay = delay_slider.value;
+    delay_text.value = delay_slider.value;
+}
+
+delay_text.oninput = function () {
+    delay = delay_text.value;
+    delay_slider.value = delay_text.value;
+}
+
+button_help.addEventListener("click", function () {
+    help_dialog.showModal();
+});
+
+close_dialog.addEventListener("click", function () {
+    help_dialog.close();
+});
+
 async function main() {
     while(run) {
         while (game_area.firstChild) {
@@ -155,12 +179,13 @@ async function main() {
         let board = gb.board;
         draw(board);
 
-        await sleep(200);
+        await sleep(delay);
     };
 }
 
 function init() {
     text_input.textContent = welcome_text;
+    delay_text.value = delay;
     gb = new GameBoard(parse(welcome_text));
     let board = gb.board;
     draw(board);

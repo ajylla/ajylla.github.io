@@ -10,14 +10,48 @@
         <header>
         </header>
         <main>
+            <dialog id="help-dialog">
+                <h1 style="text-align: center;">Help</h1>
+                <h2>What is this?</h2>
+                <p>
+                <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game of Life</a> is a simulation made
+                up of cells that can be either dead or alive.
+                The simulation has very simple rules: if a cell is dead, and has exactly 3 alive neighbours,
+                it will be alive the next timestep. A cell with fewer than 2 or more than 3 alive neighbours
+                will die. Otherwise a cell stays the same. The fascination of the Game of Life is that from
+                such simple rules on an individual cell level spawns incredibly complex behaviour on a macro
+                scale - in fact, the Game of Life is
+                <a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing complete</a>.
+                </p>
+                <h2>How to play?</h2>
+                <p>
+                This implementation has two panels, with buttons in the middle of them. The upper panel shows the
+                game itself, as the simulation plays out. The "play" and "pause" buttons start and stop the simulation.
+                The "load" button loads the board to the simulation. This board can be inputted into the lower panels
+                text input. Zeroes represent dead cells and ones represent alive cells. The "delay" slider controls
+                the delay between each timestep, so in practice the speed of the simulation.
+                </p>
+                <p><b>Have fun!</b></p>
+                <div style="justify-content: center; display: flex; align-items: center;">
+                    <button id="close-dialog">Close</button>
+                </div>
+            </dialog>
             <div id="game-area">
             </div>
             <div id="buttons">
                 <button id="play">Play</button>
                 <button id="pause">Pause</button>
                 <button id="load">Load</button>
+                <button id="help">Help</button>
+            </div>
+            <br>
+            <div id="slider-container">
+                <div>Delay:</div>
+                <input id="delay-slider" type="range" min="100" max="2000" value="200">
+                <input id="delay-text" type="text">
             </div>
             <textarea id="game-input"></textarea>
+
         </main>
         <footer>
         </footer>

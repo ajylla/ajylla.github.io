@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fi">
+    <head>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script>
+        <script
+            src="./funcs.js">
+        </script>
+    </head>
+
+    <body style="background-color:linen;">
+        <main>
+            <div style="display:flex;justify-content:center;">
+                <button type="button" onclick='show("charttoday");hide("charttomorrow");'>Tänään</button>
+                <button type="button" onclick='show("charttomorrow");hide("charttoday");'>Huomenna</button>
+            </div>
+            <div style="display:flex;justify-content:center;">
+                <div style="width:900px;height:500px;">
+                <canvas id="charttoday">
+                </canvas>
+                <script>
+                    var dstart = new Date();
+                    var dend = new Date();
+                    dstart.setHours(0,0,0,0);
+                    dend.setHours(23,59,59,999);
+                    fetch(`https://sahkotin.fi/prices?vat&start=${dstart.toISOString()}&end=${dend.toISOString()}`)
+                        .then((res) => {
+                            if (!res.ok) {
+                                throw new Error
+                                (`HTTP error! Status: ${res.status}`);
+                            }
+                            return res.json();
+                        })
+                        .then((data) => {
+                            plot(data, "charttoday", "Tänään");
+                        })
+                        .catch((error) =>
+                            console.error("Error:", error));
+                </script>
+
+                <canvas id="charttomorrow" style="display:none;">
+                </canvas>
+                <script>
+                    var dstart = new Date();
+                    dstart.setDate(dstart.getDate()+1);
+                    var dend = new Date();
+                    dend.setDate(dend.getDate()+1);
+                    dstart.setHours(0,0,0,0);
+                    dend.setHours(23,59,59,999);
+                    fetch(`https://sahkotin.fi/prices?vat&start=${dstart.toISOString()}&end=${dend.toISOString()}`)
+                        .then((res) => {
+                            if (!res.ok) {
+                                throw new Error
+                                (`HTTP error! Status: ${res.status}`);
+                            }
+                            return res.json();
+                        })
+                        .then((data) => {
+                            plot(data, "charttomorrow", "Huomenna");
+                        })
+                        .catch((error) =>
+                            console.error("Error:", error));
+                </script>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

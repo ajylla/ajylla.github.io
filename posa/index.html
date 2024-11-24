@@ -12,10 +12,6 @@
     <body style="background-color:linen;">
         <main>
             <div style="display:flex;justify-content:center;">
-                <button type="button" onclick='show("charttoday");hide("charttomorrow");'>Tänään</button>
-                <button type="button" onclick='show("charttomorrow");hide("charttoday");'>Huomenna</button>
-            </div>
-            <div style="display:flex;justify-content:center;">
                 <div style="width:900px;height:500px;">
                 <canvas id="charttoday">
                 </canvas>
@@ -64,6 +60,13 @@
                 </script>
                 </div>
             </div>
+            <div style="display:flex;justify-content:center;">
+                <button type="button" onclick='show("charttoday");hide("charttomorrow");'>Tänään</button>
+                <button type="button" onclick='show("charttomorrow");hide("charttoday");'>Huomenna</button>
+            </div>
         </main>
+        <footer style="position:fixed;bottom:0;">
+            Tämä sivu käyttää Sähköttimen <a href="https://sahkotin.fi/api">API</a>:a.
+        </footer>
     </body>
 </html>

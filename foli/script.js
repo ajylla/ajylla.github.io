@@ -1,4 +1,4 @@
-function fetch_and_display(lineref) {
+function fetch_and_display(lineref, stopref) {
     fetch("https://data.foli.fi/siri/vm")
     .then(response => {
         if (!response.ok) {
@@ -7,7 +7,7 @@ function fetch_and_display(lineref) {
         return response.json()
     })
     .then(data => {
-        delays = extract_delays(data, lineref);
+        delays = extract_delays(data, lineref, stopref);
         const linetext = document.getElementById("linetext");
         const resulttext = document.getElementById("resulttext");
         linetext.value = lineref;
@@ -15,7 +15,7 @@ function fetch_and_display(lineref) {
     })
 }
 
-function extract_delays(data, lineref) {
+function extract_delays(data, lineref, stopref) {
     const delays = [];
 
     let n = 0;
@@ -25,6 +25,21 @@ function extract_delays(data, lineref) {
             delays.push(vehicle.delaysecs);
             n++;
         }
+        if (vehicle.onwardcalls && stopref) {
+            for (const onwardcall of vehicle.onwardcalls) {
+                if (onwardcall && onwardcall.stoppointref === stopref) {
+                    console.log(onwardcall);
+                    const time = new Date(onwardcall.aimedarrivaltime * 1000);
+                    console.log(time.toString());
+                    const timeexpt = new Date(onwardcall.expectedarrivaltime * 1000);
+                    console.log(timeexpt.toString());
+                    console.log(vehicle.delaysecs/60)
+
+                    const resdiv = document.getElementById("resdiv");
+                    resdiv.innerHTML = resdiv.innerHTML + `${lineref} -> ${stopref} @ ${time.toString()}:<br />Odotettu aika: ${timeexpt.toString()}, myöhässä ${vehicle.delaysecs/60} minuuttia.<br />----------<br />`
+                }
+            }
+        }
     }
     const sum = delays.reduce((partial, a) => partial + a, 0);
     return [delays, sum/n];
@@ -32,5 +47,6 @@ function extract_delays(data, lineref) {
 
 function main() {
     const lineref = document.getElementById("lineinput").value;
-    fetch_and_display(lineref);
+    const stopref = document.getElementById("stopinput").value;
+    fetch_and_display(lineref, stopref);
 }
